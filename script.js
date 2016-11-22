@@ -1,9 +1,11 @@
 $(document).ready(function(){
 
-	var currentUserEmail = "jngo42@uwo.ca";
 	console.log("ready");
+	var currentUserEmail;
 
-	getUserProfile();
+
+
+
 
 
 	$('#loginBtn').click( function() {
@@ -23,10 +25,15 @@ $(document).ready(function(){
 				//--------------------------------GO TO MAIN PAGE-------------------------
 				currentUserEmail = userEmail;
 				window.location.href = "main.html";
+				getUserProfile(currentUserEmail);
 				}
 			}
 		}); // Ajax Call
 	}); //event handler loginBtn click
+
+
+
+
 
 
 	$('#signupBtn').click( function() {
@@ -66,10 +73,15 @@ $(document).ready(function(){
 					console.log("REGISTERED: " + msg);
 					currentUserEmail = userEmail;
 					window.location.href = "main.html";
+					getUserProfile(currentUserEmail);
 				}
 			}); // Ajax Call
 		}
 	}); //event handler loginBtn click
+
+
+
+
 
 
 
@@ -91,10 +103,18 @@ $(document).ready(function(){
 	}
 
 
+
+
+
+
 	function formatPhoneNum(phoneNum){
 		var phoneNum = phoneNum.slice(0,3) + "-" + phoneNum.slice(3,6) + "-" +phoneNum.slice(6);
 		return phoneNum;
 	}
+
+
+
+
 
 
 	function isEmailValid(email){
@@ -116,6 +136,10 @@ $(document).ready(function(){
 	}
 
 
+
+
+
+
 	function convertToSQLString(schoolName)
 	{
 		var name = schoolName; // hello''s world's
@@ -132,6 +156,9 @@ $(document).ready(function(){
 
 
 
+
+
+
 	function getUserProfile(){
 
 	  $.ajax({
@@ -141,12 +168,18 @@ $(document).ready(function(){
 	    data: {action: 'login', email: currentUserEmail},
 	    success: function(msg)
 	    {
-	      //$('#calling').html((msg));
-	      console.log("SUCCESS: " + msg);
+				$('#email').text(currentUserEmail);
+				$('#fName').text(msg.firstName);
+				$('#lName').text(msg.lastName);
+				$('#phoneNum').text(msg.phoneNum);
+				$('#school').text(msg.schoolName);
 
 	    }
 	  }); // Ajax Call
 	}//end getUserProfile
+
+
+
 
 
 });
