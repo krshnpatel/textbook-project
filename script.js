@@ -35,7 +35,9 @@ $(document).ready(function(){
 		var userPhoneNum = $('#phoneNumber').val();
 		var userSchool = $('#schoolDropdown').val();
 
-		if(isPhoneNumValid(userPhoneNum) && isEmailValid(userEmail)){
+		formatPhoneNum(userPhoneNum);
+
+	/*	if(isPhoneNumValid(userPhoneNum) && isEmailValid(userEmail)){
 
 			$.ajax({
 				cache: false,
@@ -56,7 +58,7 @@ $(document).ready(function(){
 					console.log("REGISTERED: " + msg);
 				}
 			}); // Ajax Call
-		}
+		}*/
 	}); //event handler loginBtn click
 
 
@@ -77,6 +79,13 @@ $(document).ready(function(){
 		$('#errorTag').text("");
 		return true;
 	}
+
+
+	function formatPhoneNum(phoneNum){
+		var phoneNum = phoneNum.slice(0,3) + "-" + phoneNum.slice(3,6) + "-" +phoneNum.slice(7);
+		console.log(phoneNum);
+	}
+
 
 	function isEmailValid(email){
 		var period = false;
