@@ -29,6 +29,7 @@ $(document).ready(function(){
 		var userPassword = $('#signupPwd').val();
 		var userFirstName = $('#firstName').val();
 		var userLastName = $('#lastName').val();
+		var userPhoneNum = $('#phoneNumber').val();
 		var userSchool = $('#school').val();
 
 		$.ajax({
@@ -50,6 +51,12 @@ $(document).ready(function(){
 				}
 		}); // Ajax Call
 	}); //event handler loginBtn click
+
+
+
+	function convertToPhoneNumber(phoneNum){
+		
+	}
 
 
 
