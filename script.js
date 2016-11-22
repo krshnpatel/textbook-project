@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+	var currentUserEmail;
 	console.log("ready");
 
 
@@ -20,6 +21,7 @@ $(document).ready(function(){
 				console.log("SUCCESS: " + msg);
 				if(msg == "TRUE"){
 				//--------------------------------GO TO MAIN PAGE-------------------------
+				currentUserEmail = userEmail;
 				window.location.href = "main.html";
 				}
 			}
@@ -39,7 +41,7 @@ $(document).ready(function(){
 		{
 			userSchool = convertToSQLString(userSchool);
 		}
-		
+
 
 		if(isPhoneNumValid(userPhoneNum) && isEmailValid(userEmail)){
 
@@ -62,6 +64,8 @@ $(document).ready(function(){
 				{
 					//$('#calling').html((msg));
 					console.log("REGISTERED: " + msg);
+					currentUserEmail = userEmail;
+					window.location.href = "main.html";
 				}
 			}); // Ajax Call
 		}
@@ -125,6 +129,24 @@ $(document).ready(function(){
 		}
 		return name;
 	}
+
+
+
+	function getUserProfile(){
+
+	  $.ajax({
+	    cache: false,
+	    type: "POST",
+	    url: "login.php",
+	    data: {action: 'login', email: currentUserEmail},
+	    success: function(msg)
+	    {
+	      //$('#calling').html((msg));
+	      console.log("SUCCESS: " + msg);
+
+	    }
+	  }); // Ajax Call
+	}//end getUserProfile
 
 
 });
