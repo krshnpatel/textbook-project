@@ -1,5 +1,7 @@
 <?php
 
+	returnUserInfo("jngo42@uwo.ca");
+
 	if (isset($_POST['action'])) {
 	    switch ($_POST['action']) {
 	        case "login":
@@ -94,6 +96,25 @@
 			
 			echo "TRUE";
 		}
+
+		$myConnection->close();
+	}
+
+	function returnUserInfo($email)
+	{
+		$myConnection = connect();
+
+		$getUserInfoQuery = "SELECT u.firstName, u.lastName, u.phoneNum, s.schoolName
+							 FROM User u, School s
+							 WHERE u.userEmail = '" . $email . "' AND
+							 	   u.schoolID = s.schoolID;";
+
+		$userInfo = $myConnection->query($getUserInfoQuery);
+		$userInfo = $userInfo->fetch_assoc();
+
+		$data = array('firstName'=> $userInfo['firstName'], 'lastName' => $userInfo['lastName'], 'phoneNum' => $userInfo['phoneNum'], 'schoolName' => $userInfo['schoolName']);
+		header('Content-Type: application/json');
+		echo json_encode($data);
 
 		$myConnection->close();
 	}
