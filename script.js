@@ -1,9 +1,9 @@
 $(document).ready(function(){
 
-	var currentUserEmail;
+	var currentUserEmail = "jngo42@uwo.ca";
 	console.log("ready");
 
-
+	getUserProfile();
 
 
 	$('#loginBtn').click( function() {
@@ -136,7 +136,7 @@ $(document).ready(function(){
 
 	  $.ajax({
 	    cache: false,
-	    type: "POST",
+	    type: "GET",
 	    url: "login.php",
 	    data: {action: 'login', email: currentUserEmail},
 	    success: function(msg)
