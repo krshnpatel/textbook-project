@@ -26,13 +26,13 @@
   <div id = "registerContent">
 
       <label for="signupUsr">Email:</label>
-      <input type="text" id="signupUsr">
+      <input type="text" id="signupUsr" />
 
       <label for="signupPwd">Password:</label>
-      <input type="password" id="signupPwd">
+      <input type="password" id="signupPwd" />
 
       <label for="firstName">First name:</label>
-      <input type="text" id="firstName">
+      <input type="text" id="firstName" />
 
       <label for="lastName">Last name:</label>
       <input type="text" id="lastName" />
@@ -41,14 +41,33 @@
       <input type="text" id="phoneNumber" />
 
       <label for="school">School:</label>
+
+
       <select name="schools" id = "schoolDropdown">
         <?php
+          $servername = "localhost";
+          $username = "root";
+          $password = "textbookproject";
+          $database = "kriativejatabase";
 
+          // Create connection
+          $myConnection = new mysqli($servername, $username, $password);
 
+          $sql = "USE kriativejatabase;";
 
+          mysqli_query($myConnection, $sql);
 
+          $schoolNameQuery = "SELECT schoolName FROM School;";
+
+          $schoolNames = mysqli_query($myConnection, $schoolNameQuery);
+          
+          while ($row = $schoolNames->fetch_assoc())
+          {
+            echo '<option value="' . $row['schoolName'] . '">' . $row['schoolName'] . '</option>';
+          }
+
+          //echo '<br/><option value="volvo">Volvo</option><option value="saab">Saab</option><option value="fiat">Fiat</option><option value="audi">Audi</option>';
         ?>
-
       </select>
 
   </div>

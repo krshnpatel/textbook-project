@@ -20,27 +20,16 @@ function connect()
 
 	// Check connection
 	if ($myConnection->connect_error)
-	{
 		die("Connection failed: " . $myConnection->connect_error);
-	} 
 
 	debug_to_console("Connected successfully<br/>");
-	//echo "Connected successfully<br/>";
-
-	//mysqli_close($myConnection);
 
 	$sql = "USE kriativejatabase;";
 
 	if ($myConnection->query($sql) === TRUE)
-	{
 		debug_to_console("Using the database!");
-		//echo "Using the database!";
-	}
 	else
-	{
 		debug_to_console("Error using database: " . $myConnection->error);
-		//echo "Error using database: " . $myConnection->error;
-	}
 
 	return $myConnection;
 }
@@ -80,17 +69,18 @@ function registerUser($email, $password, $firstName, $lastName, $phoneNum, $scho
 	else
 	{
 		$schoolIdQuery = "SELECT schoolID
-					 FROM School
-					 WHERE schoolName = '" . $schoolName . "';";
+						  FROM School
+						  WHERE schoolName = '" . $schoolName . "';";
 
 		$schoolID = $myConnection->query($schoolIdQuery);
+		$schoolID = $schoolID->fetch_assoc();
 
 		$insertUserQuery = "INSERT INTO User(userEmail, firstName, lastName, phoneNum, password, schoolID)
-					   VALUES('" . $email . "', '" . $firstName . "', '" . $lastName . "', '" . $phoneNum . "', '" . $password . "', " . $schoolID . ");";
+					   VALUES('" . $email . "', '" . $firstName . "', '" . $lastName . "', '" . $phoneNum . "', '" . $password . "', " . $schoolID['schoolID'] . ");";
 
 		$myConnection->query($insertUserQuery);
 		
-		echo "TRUE";
+		echo "TRUE: " . $insertUserQuery;
 	}
 
 	$myConnection->close();
@@ -106,4 +96,6 @@ function debug_to_console( $data )
     //echo $output;
 }
 
+
+////echo "<br/><option value='volvo'>Volvo</option><option value='saab'>Saab</option><option value='fiat'>Fiat</option><option value='audi'>Audi</option>";
 ?>
