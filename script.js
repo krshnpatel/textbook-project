@@ -20,7 +20,7 @@ $(document).ready(function(){
 				console.log("SUCCESS: " + msg);
 				if(msg == "TRUE"){
 				//--------------------------------GO TO MAIN PAGE-------------------------
-				//window.location.href = "http://stackoverflow.com";
+				window.location.href = "main.html";
 				}
 			}
 		}); // Ajax Call
