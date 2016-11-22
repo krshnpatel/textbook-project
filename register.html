@@ -25,19 +25,28 @@
 
   <div id = "registerContent">
 
-      <label for="usr">Email:</label>
-      <input type="text" id="usr">
-      <label for="pwd">Password:</label>
-      <input type="password" id="pwd">
-      <label for="usr">Email:</label>
-      <input type="text" id="usr">
-      <label for="pwd">Password:</label>
-      <input type="password" id="pwd">
+      <label for="signupUsr">Email:</label>
+      <input type="text" id="signupUsr">
+
+      <label for="signupPwd">Password:</label>
+      <input type="password" id="signupPwd">
+
+      <label for="firstName">First name:</label>
+      <input type="text" id="firstName">
+
+      <label for="lastName">Last name:</label>
+      <input type="text" id="lastName" />
+
+      <label for="phoneNumber" onkeypress = 'return event.charCode >= 48 && event.charCode <= 57'>Phone number:</label>
+      <input type="text" id="phoneNumber" />
+
+      <label for="school">School:</label>
+      <input type="text" id="school" />
 
   </div>
 
   <div class = "container" id = "signup">
-    <button type="button" class="btn btn-primary btn-lg">Sign Up</button>
+    <button type="button" class="btn btn-primary btn-lg" id = "signupBtn">Sign Up</button>
   </div>
 
 </body>
