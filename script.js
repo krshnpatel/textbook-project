@@ -10,16 +10,19 @@ $(document).ready(function(){
 		var userPassword = $('#pwd').val();
 
 		$.ajax({
-		    cache: false,
-		    type: "POST",
-		    url: "login.php",
-		    data: {action: 'login', email: userEmail, password: userPassword},
-		    success: function(msg)
-		    {
-		        //$('#calling').html((msg));
-		        console.log("SUCCESS: " + msg);
-						//--------------------------------GO TO MAIN PAGE-------------------------
-		    }
+			cache: false,
+			type: "POST",
+			url: "login.php",
+			data: {action: 'login', email: userEmail, password: userPassword},
+			success: function(msg)
+			{
+				//$('#calling').html((msg));
+				console.log("SUCCESS: " + msg);
+				if(msg == "TRUE"){
+				//--------------------------------GO TO MAIN PAGE-------------------------
+				//window.location.href = "http://stackoverflow.com";
+				}
+			}
 		}); // Ajax Call
 	}); //event handler loginBtn click
 
@@ -32,30 +35,64 @@ $(document).ready(function(){
 		var userPhoneNum = $('#phoneNumber').val();
 		var userSchool = $('#school').val();
 
-		$.ajax({
+		if(isPhoneNumValid(userPhoneNum) && isEmailValid(userEmail)){
+
+			$.ajax({
 				cache: false,
 				type: "POST",
 				url: "login.php",
 				data: {
-							action: 'register',
-				 			email: userEmail,
-							password: userPassword,
-							firstName: userFirstName,
-							lastName: userLastName,
-							school: userSchool
-						},
+					action: 'register',
+					email: userEmail,
+					password: userPassword,
+					firstName: userFirstName,
+					lastName: userLastName,
+					school: userSchool
+				},
 				success: function(msg)
 				{
-						//$('#calling').html((msg));
-						console.log("REGISTERED: " + msg);
+					//$('#calling').html((msg));
+					console.log("REGISTERED: " + msg);
 				}
-		}); // Ajax Call
+			}); // Ajax Call
+		}
 	}); //event handler loginBtn click
 
 
 
-	function convertToPhoneNumber(phoneNum){
-		
+	function isPhoneNumValid(phoneNum){
+		for(var i = 0; i < phoneNum.length; i++){
+			console.log(phoneNum.charCodeAt(i));
+			if(phoneNum.charCodeAt(i) < 48 || phoneNum.charCodeAt(i) > 57){
+				$('#errorTag').text("invalid phone number");
+				return false;
+			}
+		}
+		if(phoneNum.length != 10){
+			$('#errorTag').text("Must be 10 numbers long");
+			return false;
+		}
+
+		$('#errorTag').text("");
+		return true;
+	}
+
+	function isEmailValid(email){
+		var period = false;
+		var atSign = false;
+		for(var i = 0; i < email.length; i++){
+			if(email.charCodeAt(i) == 46){
+				period = true;
+			}
+			if(email.charCodeAt(i) == 64){
+				atSign = true;
+			}
+			if(atSign && period){
+				return true;
+			}
+		}
+		$('#errorTag').text("invalid email");
+		return false;
 	}
 
 
