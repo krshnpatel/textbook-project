@@ -33,7 +33,7 @@ $(document).ready(function(){
 		var userFirstName = $('#firstName').val();
 		var userLastName = $('#lastName').val();
 		var userPhoneNum = $('#phoneNumber').val();
-		var userSchool = $('#school').val();
+		var userSchool = $('#schoolDropdown').val();
 
 		if(isPhoneNumValid(userPhoneNum) && isEmailValid(userEmail)){
 
@@ -47,6 +47,7 @@ $(document).ready(function(){
 					password: userPassword,
 					firstName: userFirstName,
 					lastName: userLastName,
+					phoneNum: userPhoneNum,
 					school: userSchool
 				},
 				success: function(msg)

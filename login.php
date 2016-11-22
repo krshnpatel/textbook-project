@@ -5,6 +5,9 @@ if (isset($_POST['action'])) {
         case "login":
             verifyUser($_POST['email'], $_POST['password']);
             break;
+        case "register":
+        	registerUser($_POST['email'], $_POST['password'], $_POST['firstName'], $_POST['lastName'], $_POST['phoneNum'], $_POST['school']);
+        	break;
     }
 }
 
@@ -76,9 +79,9 @@ function registerUser($email, $password, $firstName, $lastName, $phoneNum, $scho
 		$schoolID = $schoolID->fetch_assoc();
 
 		$insertUserQuery = "INSERT INTO User(userEmail, firstName, lastName, phoneNum, password, schoolID)
-					   VALUES('" . $email . "', '" . $firstName . "', '" . $lastName . "', '" . $phoneNum . "', '" . $password . "', " . $schoolID['schoolID'] . ");";
+							VALUES('" . $email . "', '" . $firstName . "', '" . $lastName . "', '" . $phoneNum . "', '" . $password . "', " . $schoolID['schoolID'] . ");";
 
-		$myConnection->query($insertUserQuery);
+		//$myConnection->query($insertUserQuery);
 		
 		echo "TRUE: " . $insertUserQuery;
 	}
