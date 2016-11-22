@@ -63,6 +63,39 @@ function verifyUser($email, $password)
 	$myConnection->close();
 }
 
+function registerUser($email, $password, $firstName, $lastName, $phoneNum, $schoolName)
+{
+	$myConnection = connect();
+
+	$sql = "SELECT userEmail, password
+			FROM User
+			WHERE userEmail = '" . $email . "';";
+
+	$result = $myConnection->query($sql);
+
+	if ($result->num_rows > 0)
+	{
+		echo "FALSE";
+	}
+	else
+	{
+		$schoolIdQuery = "SELECT schoolID
+					 FROM School
+					 WHERE schoolName = '" . $schoolName . "';";
+
+		$schoolID = $myConnection->query($schoolIdQuery);
+
+		$insertUserQuery = "INSERT INTO User(userEmail, firstName, lastName, phoneNum, password, schoolID)
+					   VALUES('" . $email . "', '" . $firstName . "', '" . $lastName . "', '" . $phoneNum . "', '" . $password . "', " . $schoolID . ");";
+
+		$myConnection->query($insertUserQuery);
+		
+		echo "TRUE";
+	}
+
+	$myConnection->close();
+}
+
 function debug_to_console( $data )
 {
     if ( is_array( $data ) )
