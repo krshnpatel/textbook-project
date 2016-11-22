@@ -1,0 +1,17 @@
+#title{
+  text-align: center;
+}
+
+#loginBtn, #registerBtn {
+  text-align: center;
+}
+
+#loginForm{
+  margin: 0 auto;
+  width: 200px;
+}
+
+#loginAndRegisterBtns{
+  text-align: center;
+  margin-top: 20px;
+}
