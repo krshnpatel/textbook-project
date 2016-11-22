@@ -1,8 +1,8 @@
 $(document).ready(function(){
 
 	console.log("ready");
-	var currentUserEmail;
 
+	
 
 
 
@@ -23,9 +23,8 @@ $(document).ready(function(){
 				console.log("SUCCESS: " + msg);
 				if(msg == "TRUE"){
 				//--------------------------------GO TO MAIN PAGE-------------------------
-				currentUserEmail = userEmail;
+				localStorage.setItem('_currentUserEmail', userEmail);
 				window.location.href = "main.html";
-				getUserProfile(currentUserEmail);
 				}
 			}
 		}); // Ajax Call
@@ -67,13 +66,12 @@ $(document).ready(function(){
 					phoneNum: userPhoneNum,
 					school: userSchool
 				},
-				success: function(msg)
+				complete: function(msg)
 				{
 					//$('#calling').html((msg));
 					console.log("REGISTERED: " + msg);
-					currentUserEmail = userEmail;
+					localStorage.setItem('currentUserEmail', userEmail);
 					window.location.href = "main.html";
-					getUserProfile(currentUserEmail);
 				}
 			}); // Ajax Call
 		}
@@ -155,28 +153,6 @@ $(document).ready(function(){
 	}
 
 
-
-
-
-
-	function getUserProfile(){
-
-	  $.ajax({
-	    cache: false,
-	    type: "GET",
-	    url: "login.php",
-	    data: {action: 'login', email: currentUserEmail},
-	    success: function(msg)
-	    {
-				$('#email').text(currentUserEmail);
-				$('#fName').text(msg.firstName);
-				$('#lName').text(msg.lastName);
-				$('#phoneNum').text(msg.phoneNum);
-				$('#school').text(msg.schoolName);
-
-	    }
-	  }); // Ajax Call
-	}//end getUserProfile
 
 
 

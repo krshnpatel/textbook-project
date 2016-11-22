@@ -1,14 +1,16 @@
 <?php
 
-	returnUserInfo("jngo42@uwo.ca");
-
-	if (isset($_POST['action'])) {
+	if (isset($_POST['action']))
+	{
 	    switch ($_POST['action']) {
 	        case "login":
 	            verifyUser($_POST['email'], $_POST['password']);
 	            break;
 	        case "register":
 	        	registerUser($_POST['email'], $_POST['password'], $_POST['firstName'], $_POST['lastName'], $_POST['phoneNum'], $_POST['school']);
+	        	break;
+	        case "getUserInfo":
+	        	returnUserInfo($_POST['email']);
 	        	break;
 	    }
 	}
@@ -112,9 +114,16 @@
 		$userInfo = $myConnection->query($getUserInfoQuery);
 		$userInfo = $userInfo->fetch_assoc();
 
-		$data = array('firstName'=> $userInfo['firstName'], 'lastName' => $userInfo['lastName'], 'phoneNum' => $userInfo['phoneNum'], 'schoolName' => $userInfo['schoolName']);
+
+
+		$data = array('firstName' => $userInfo['firstName'], 'lastName' => $userInfo['lastName'], 'phoneNum' => $userInfo['phoneNum'], 'schoolName' => $userInfo['schoolName']);
+		$data = array($data);
 		header('Content-Type: application/json');
+
+
+
 		echo json_encode($data);
+		//echo json_encode($data);
 
 		$myConnection->close();
 	}
