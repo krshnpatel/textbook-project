@@ -35,9 +35,15 @@ $(document).ready(function(){
 		var userPhoneNum = $('#phoneNumber').val();
 		var userSchool = $('#schoolDropdown').val();
 
-		formatPhoneNum(userPhoneNum);
+		if (userSchool.indexOf("'") != -1)
+		{
+			userSchool = convertToSQLString(userSchool);
+		}
+		
 
-	/*	if(isPhoneNumValid(userPhoneNum) && isEmailValid(userEmail)){
+		if(isPhoneNumValid(userPhoneNum) && isEmailValid(userEmail)){
+
+			userPhoneNum = formatPhoneNum(userPhoneNum);
 
 			$.ajax({
 				cache: false,
@@ -58,7 +64,7 @@ $(document).ready(function(){
 					console.log("REGISTERED: " + msg);
 				}
 			}); // Ajax Call
-		}*/
+		}
 	}); //event handler loginBtn click
 
 
@@ -82,8 +88,8 @@ $(document).ready(function(){
 
 
 	function formatPhoneNum(phoneNum){
-		var phoneNum = phoneNum.slice(0,3) + "-" + phoneNum.slice(3,6) + "-" +phoneNum.slice(7);
-		console.log(phoneNum);
+		var phoneNum = phoneNum.slice(0,3) + "-" + phoneNum.slice(3,6) + "-" +phoneNum.slice(6);
+		return phoneNum;
 	}
 
 
@@ -105,6 +111,20 @@ $(document).ready(function(){
 		return false;
 	}
 
+
+	function convertToSQLString(schoolName)
+	{
+		var name = schoolName; // hello''s world's
+		for (var i = 0; i < name.length; i++)
+		{
+			if (name.charCodeAt(i) == 39)
+			{
+				name = name.slice(0,i) + "'" + name.slice(i);
+				i++;
+			}
+		}
+		return name;
+	}
 
 
 });

@@ -66,7 +66,6 @@
             echo '<option value="' . $row['schoolName'] . '">' . $row['schoolName'] . '</option>';
           }
 
-          //echo '<br/><option value="volvo">Volvo</option><option value="saab">Saab</option><option value="fiat">Fiat</option><option value="audi">Audi</option>';
         ?>
       </select>
 
@@ -78,7 +77,7 @@
 
   <div class = "container" id = "signup">
     <button type="button" class="btn btn-primary btn-lg" id = "registerBtn" onclick="location.href='index.html';">Back</button>
-    <button type="button" class="btn btn-primary btn-lg" id = "signupBtn">Sign Up</button>
+    <button type="button" class="btn btn-primary btn-lg" id = "signupBtn" onclick="location.href='main.html';">Sign Up</button>
   </div>
 
 </body>

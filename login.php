@@ -81,9 +81,18 @@
 			$insertUserQuery = "INSERT INTO User(userEmail, firstName, lastName, phoneNum, password, schoolID)
 								VALUES('" . $email . "', '" . $firstName . "', '" . $lastName . "', '" . $phoneNum . "', '" . $password . "', " . $schoolID['schoolID'] . ");";
 
-			//$myConnection->query($insertUserQuery);
+			$myConnection->query($insertUserQuery);
+
+			$insertUserSchoolQuery = "INSERT INTO UserSchool(userEmail, schoolName)
+									  SELECT u.userEmail, s.schoolName
+									  FROM User u, School s
+									  WHERE u.schoolID = s.schoolID AND
+									  		u.userEmail NOT IN (SELECT userEmail
+									  	  						FROM UserSchool);";
+
+			$myConnection->query($insertUserSchoolQuery);
 			
-			echo "TRUE: " . $insertUserQuery;
+			echo "TRUE";
 		}
 
 		$myConnection->close();
@@ -98,5 +107,5 @@
 
 	    //echo $output;
 	}
-	
+
 ?>
