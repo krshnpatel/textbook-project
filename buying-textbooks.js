@@ -15,7 +15,7 @@ function listTextbooksPeopleNeed(){
     cache: false,
     type: "POST",
     url: "login.php",
-    data: {action: 'textbooksBeingSold', email: currentUserEmail},
+    data: {action: 'textbooksPeopleNeed', email: currentUserEmail},
     success: function(msg)
     {
       msg = JSON.parse(msg);
@@ -23,7 +23,7 @@ function listTextbooksPeopleNeed(){
       if(msg.length > 0){
         for(var i = 0; i < msg.length; i++){
 
-          $('#textbooksBeingSoldTable tr:last').after('<tr><td>' + msg[i].title + '</td><td>' + msg[i].edition + '</td><td>' + msg[i].author + '</td><td>' + msg[i].isbn + '</td><td>' + msg[i].description + '</td><td>'+ msg[i].postingTime +'</td><td>'+
+          $('#textbooksPeopleNeedTable tr:last').after('<tr><td>' + msg[i].title + '</td><td>' + msg[i].edition + '</td><td>' + msg[i].author + '</td><td>' + msg[i].isbn + '</td><td>' + msg[i].description + '</td><td>'+ msg[i].postingTime +'</td><td>'+
           msg[i].postingDate +'</td></tr>');
         }
       }
