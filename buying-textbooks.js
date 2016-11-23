@@ -3,13 +3,13 @@ $(document).ready(function(){
 
   var currentUserEmail = localStorage.getItem("_currentUserEmail");
 
-  listTextbooksBeingSold();
+  listTextbooksPeopleNeed();
 
 });
 
 
 
-function listTextbooksBeingSold(){
+function listTextbooksPeopleNeed(){
 
   $.ajax({
     cache: false,
