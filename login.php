@@ -12,6 +12,9 @@
 	        case "getUserInfo":
 	        	returnUserInfo($_POST['email']);
 	        	break;
+	        case "userListings":
+	        	returnUserListings($_POST['email']);
+	        	break;
 	    }
 	}
 
@@ -120,10 +123,59 @@
 		$data = array($data);
 		header('Content-Type: application/json');
 
-
-
 		echo json_encode($data);
-		//echo json_encode($data);
+
+		$myConnection->close();
+	}
+
+	function returnUserListings($email)
+	{
+		$myConnection = connect();
+
+		$getUserBuyingListQuery = "SELECT t.title, t.edition, t.author, t.isbn, l.description, l.postingTime, l.postingDate
+							  	   FROM Listing l, Textbook t
+							  	   WHERE l.listingID NOT IN (SELECT listingID
+							  	  							 FROM sellinglist) AND
+							  	   l.isbn = t.isbn AND
+							  	   l.userEmail = '" . $email . "';";
+
+		$getUserSellingListQuery = "SELECT t.title, t.edition, t.author, t.isbn, l.description, sl.price, sl.imagePath, l.postingTime, l.postingDate
+									FROM Listing l, Textbook t, SellingList sl
+									WHERE l.listingID = sl.listingID AND
+										  l.isbn = t.isbn AND
+										  l.userEmail = '" . $email . "';";
+
+
+		$finalBuyingArray = array();
+		$finalSellingArray = array();
+
+		$userBuyingList = $myConnection->query($getUserBuyingListQuery);
+		$userSellingList = $myConnection->query($getUserSellingListQuery);
+
+		if ($userBuyingList->num_rows > 0)
+		{
+			while ($row = $userBuyingList->fetch_assoc())
+			{
+				$data = array('title' => $row['title'], 'edition' => $row['edition'], 'author' => $row['author'], 'isbn' => $row['isbn'], 'description' => $row['description'], 'postingTime' => $row['postingTime'], 'postingDate' => $row['postingDate']);
+				array_push($finalBuyingArray, $data);
+			}
+		}
+
+
+		if ($userSellingList->num_rows > 0)
+		{
+			while ($row = $userSellingList->fetch_assoc()) 
+			{
+				$data = array('title' => $row['title'], 'edition' => $row['edition'], 'author' => $row['author'], 'isbn' => $row['isbn'], 'description' => $row['description'], 'price' => $row['price'], 'imagePath' => $row['imagePath'], 'postingTime' => $row['postingTime'], 'postingDate' => $row['postingDate']);
+				array_push($finalSellingArray, $data);
+			}
+		}
+
+		$finalArray = array();
+
+		array_push($finalArray, $finalSellingArray);
+		array_push($finalArray, $finalBuyingArray);
+		echo json_encode($finalArray);
 
 		$myConnection->close();
 	}
