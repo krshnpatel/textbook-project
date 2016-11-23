@@ -1,5 +1,7 @@
 <?php
 
+changePassword("jngosafdsdf2@uwo.ca", "hello", "1234566788");
+
 	if (isset($_POST['action']))
 	{
 	    switch ($_POST['action']) {
@@ -245,7 +247,8 @@
 							FROM Listing l, Textbook t
 							WHERE t.isbn = l.isbn AND
 								  l.listingID NOT IN (SELECT listingID
-								  					  FROM SellingList);";
+								  					  FROM SellingList)
+							ORDER BY l.postingDate DESC, l.postingTime DESC;";
 
 		$buyingList = $myConnection->query($buyingListQuery);
 
@@ -273,7 +276,8 @@
 		$sellingListQuery = "SELECT t.title, t.edition, t.author, t.isbn, l.description, sl.price, sl.imagePath, l.postingTime, l.postingDate
 							 FROM Listing l, SellingList sl, Textbook t
 							 WHERE l.listingID = sl.listingID AND
-							 	   t.isbn = l.isbn;";
+							 	   t.isbn = l.isbn
+							 ORDER BY l.postingDate DESC, l.postingTime DESC;";
 
 		$sellingList = $myConnection->query($sellingListQuery);
 
@@ -319,6 +323,40 @@
 		echo json_encode($finalMatchingArray);
 
 		$myConnection->close();
+	}
+
+
+	function changeUserInfo($email, $newPassword, $newPhoneNumber)
+	{
+		$myConnection = connect();
+
+		if (strlen($newPhoneNumber) == 0 && strlen($newPassword) == 0)
+		{
+			echo "NO CHANGE";
+		}
+		
+		if (!isPhoneNumValid($newPhoneNumber))
+		{
+			echo "PHONE"
+		}
+
+		$changeUserInfoQuery = "UPDATE User
+						   		SET password = '" . $newPassword . "', phoneNum = '" . $newPhoneNumber . "'
+						   		WHERE userEmail = '" . $email . "';";
+
+		echo $changeUserInfoQuery;
+		//$myConnection->query($changeUserInfoQuery);
+
+		$myConnection->close();
+	}
+
+
+	function isPhoneNumValid($phoneNum)
+	{
+		if(preg_match("/^[0-9]{3}[0-9]{3}[0-9]{4}$/", $phoneNum))
+		{
+			return true;
+		}
 	}
 
 
