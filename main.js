@@ -7,16 +7,9 @@ $(document).ready(function(){
   getUserProfile(currentUserEmail);
 
 
- // getUserProfile();
 
 
 
-
-
-
-  $('#row1').click( function() {
-    console.log("clicked")
-  }); //event handler loginBtn click
 
 
 
@@ -40,6 +33,25 @@ function getUserProfile(){
     }); // Ajax Call
   }//end getUserProfile
 
+
+
+
+  function getUserListing(){
+
+    $.ajax({
+      cache: false,
+      type: "POST",
+      url: "login.php",
+      data: {action: 'userListings', email: currentUserEmail},
+      success: function(msg)
+      {
+
+        $('#sellingListingTable tr:last').after('<tr> <td>dfgdfg</td> <td>gdfg</td> <td>gdfg</td> </tr>');
+        $('#buyingListingTable tr:last').after('<tr><td></td><td></td><td></td></tr>');
+
+      }
+    }); // Ajax Call
+
+  }
+
 });
-
-
