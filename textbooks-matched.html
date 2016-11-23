@@ -8,8 +8,8 @@
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <link rel = "stylesheet" href = "buying-textbooks.css" />
-  <script type="text/javascript" src="buying-textbooks.js"></script>
+  <link rel = "stylesheet" href = "textbooks-matched.css" />
+  <script type="text/javascript" src="textbooks-matched.js"></script>
 
   <title>Textbook Buy/Sell</title>
 </head>
@@ -26,26 +26,31 @@
       <ul class="nav navbar-nav">
         <li><a href="#">Textbooks People Need</a></li>
         <li><a href="selling-textbooks.html">Textbooks For Sale</a></li>
-        <li><a href="textbooks-matched.html">Textbooks Matched</a></li>
+        <li><a href="#">Textbooks Matched</a></li>
       </ul>
     </div>
   </nav>
 
 
 
-    <h1>Textbooks People are Buying</h1>
+    <h1>All buyers/sellers you are matched with</h1>
 
     <div class = "container" id = "listings">
-      <table class="table table-hover" id = "textbooksPeopleNeedTable">
+      <table class="table table-hover" id = "matchedTextbookTable">
         <thead>
           <tr>
+            <th>ISBN</th>
             <th>Title</th>
             <th>Edition</th>
             <th>Author</th>
-            <th>ISBN</th>
-            <th>Description</th>
-            <th>Posting Time</th>
-            <th>Posting Date</th>
+            <th>Buyer First Name</th>
+            <th>Buyer Last Name</th>
+            <th>Buyer Email</th>
+            <th>Buyer Phone number</th>
+            <th>Seller First Name</th>
+            <th>Seller Last Name</th>
+            <th>Seller Email</th>
+            <th>Seller Phone number</th>
           </tr>
         </thead>
         <tbody>
