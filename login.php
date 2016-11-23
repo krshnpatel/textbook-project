@@ -1,7 +1,5 @@
 <?php
 
-findMatches("jngo42@uwo.ca");
-
 	if (isset($_POST['action']))
 	{
 	    switch ($_POST['action']) {
@@ -313,7 +311,7 @@ findMatches("jngo42@uwo.ca");
 		{
 			while ($row = $matchList->fetch_assoc())
 			{
-				$data = array('isbn' => $row['isbn'], 'title' => $row['title'], 'edition' => $row['edition'], 'author' => $row['author'], 'buyerFirstName' => $row['buyerFirstName'], 'buyerLastName' => $row['buyerLastName'], 'buyerEmail' => $row['buyerPhoneNum'], 'sellerFirstName' => $row['sellerFirstName'], 'sellerLastName' => $row['sellerLastName'], 'sellerEmail' => $row['sellerPhoneNum']);
+				$data = array('isbn' => $row['isbn'], 'title' => $row['title'], 'edition' => $row['edition'], 'author' => $row['author'], 'buyerFirstName' => $row['buyerFirstName'], 'buyerLastName' => $row['buyerLastName'], 'buyerEmail' => $row['buyerEmail'], 'buyerPhoneNum' => $row['buyerPhoneNum'], 'sellerFirstName' => $row['sellerFirstName'], 'sellerLastName' => $row['sellerLastName'], 'sellerEmail' => $row['sellerEmail'], 'sellerPhoneNum' => $row['sellerPhoneNum']);
 				array_push($finalMatchingArray, $data);
 			}
 		}
