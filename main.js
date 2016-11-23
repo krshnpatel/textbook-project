@@ -4,8 +4,9 @@ $(document).ready(function(){
   console.log("ready");
 
   var currentUserEmail = localStorage.getItem("_currentUserEmail");
-  getUserProfile(currentUserEmail);
-  getUserListing(currentUserEmail);
+  getUserProfile();
+  getUserListing();
+  getRecommendedBooks();
 
 
 
@@ -62,6 +63,30 @@ $(document).ready(function(){
           }
         }
 
+      }
+    }); // Ajax Call
+
+  }//end getUserListing
+
+
+
+
+
+  function getRecommendedBooks(){
+
+    $.ajax({
+      cache: false,
+      type: "POST",
+      url: "login.php",
+      data: {action: 'recommendedBooks', email: currentUserEmail},
+      success: function(msg)
+      {
+        if(msg.length > 0){
+          for(var i = 0; i < msg[0].length; i++){
+            $('#recommendedTextbooks tr:last').after('<tr><td>' + msg[0].title + '</td><td>' + msg[0].edition + '</td><td>' + msg[0].author + '</td><td>' + msg[0].isbn + '</td><td>'
+            + msg[0].price + '</td></tr>');
+          }
+        }
       }
     }); // Ajax Call
 
