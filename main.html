@@ -33,9 +33,6 @@
 
   <div class = "container" id = "mainProfileDiv">
 
-    <button type="button" class="btn btn-default btn-lg profileElements">Edit profile</button>
-    <button type="button" class="btn btn-default btn-lg profileElements">Edit listings</button>
-
     <div class = "container row" id = "profileDiv">
       <h4 class = "col-sm-4" id = "fName">First name:</h4>
       <h4 class = "col-sm-4" id = "lName">Last name:</h4>
@@ -47,7 +44,19 @@
       <h4 class = "col-sm-6" id = "school">School:</h4>
     </div>
 
+    <div id = "editProfileDiv">
+      <label>Phone number:</label>
+      <input type = "text" id = "editPhoneNumInput">
+      <label>Password:</label>
+      <input type = "password" id = "editPasswordInput">
+      <button type="submit" class="btn btn-primary btn-lg" id = "submitEditBtn">Edit</button>
+      <p id= "errorTag"></p>
+    </div>
 
+    <div id = "btnDiv">
+      <button type="button" class="btn btn-default btn-lg profileElements" id= "editBtn">Edit Profile</button>
+      <button type="button" class="btn btn-default btn-lg profileElements">Edit listings</button>
+    </div>
 
     <h1>Your Selling Listings</h1>
 

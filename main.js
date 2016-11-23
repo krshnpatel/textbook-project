@@ -1,12 +1,65 @@
 
 $(document).ready(function(){
 
+  $('#editProfileDiv').hide();
+  var open = false;
   console.log("ready");
 
   var currentUserEmail = localStorage.getItem("_currentUserEmail");
   getUserProfile();
   getUserListing();
   getRecommendedBooks();
+
+
+
+
+
+  $('#editBtn').click(function(){
+    //var phoneNumber = $('#phoneNum').text();
+    if(!open){
+      //$('#editPhoneNumInput').val();
+      $('#editProfileDiv').show();
+      $('#editBtn').text("Cancel Edit");
+      open = true;
+    }
+    else{
+      $('#editProfileDiv').hide();
+      $('#editBtn').text("Edit Profile");
+      $('#editPhoneNumInput').val("");
+      $('#editPasswordInput').val("");
+      $('#errorTag').text("");
+      open = false;
+    }
+
+
+  });
+
+
+
+  $('#submitEditBtn').click(function(){
+
+    var userPhoneNumber = $('#editPhoneNumInput').val();
+    var userPassword = $('#editPasswordInput').val();
+
+    $.ajax({
+      cache: false,
+      type: "POST",
+      url: "login.php",
+      data: {action: 'editProfile', email: currentUserEmail, phoneNum: userPhoneNumber, password: userPassword},
+      success: function(msg)
+      {
+        $('#errorTag').text("Successfully edited profile");
+        $('#editProfileDiv').hide();
+        $('#editBtn').text("Edit Profile");
+        $('#editPhoneNumInput').val("");
+        $('#editPasswordInput').val("");
+        $('#errorTag').text(msg);
+        open = false;
+      }
+    }); // Ajax Call
+
+
+  });
 
 
 
@@ -93,6 +146,36 @@ $(document).ready(function(){
       }
     }); // Ajax Call
 
+  }
+
+
+
+
+
+
+  function isPhoneNumValid(phoneNum){
+    for(var i = 0; i < phoneNum.length; i++){
+      console.log(phoneNum.charCodeAt(i));
+      if(phoneNum.charCodeAt(i) < 48 || phoneNum.charCodeAt(i) > 57){
+        $('#errorTag').text("invalid phone number");
+        return false;
+      }
+    }
+    if(phoneNum.length != 10){
+      $('#errorTag').text("Must be 10 numbers long");
+      return false;
+    }
+
+    $('#errorTag').text("");
+    return true;
+  }
+
+
+
+
+  function formatPhoneNum(phoneNum){
+    var phoneNum = phoneNum.slice(0,3) + "-" + phoneNum.slice(3,6) + "-" +phoneNum.slice(6);
+    return phoneNum;
   }
 
 });

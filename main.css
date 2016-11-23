@@ -31,3 +31,17 @@ h1{
 .profileElements{
   margin: 30px;
 }
+
+
+#btnDiv{
+  text-align: center;
+}
+
+#fName, #lName, #email, #phoneNum, #school{
+  font-weight:bolder;
+}
+
+
+#editProfileDiv{
+  text-align: center;
+}
