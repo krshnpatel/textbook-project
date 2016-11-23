@@ -14,7 +14,7 @@ $(document).ready(function(){
 
 
 
-function getUserProfile(){
+  function getUserProfile(){
     console.log("get user profile 1" + currentUserEmail);
     $.ajax({
       cache: false,
@@ -45,9 +45,19 @@ function getUserProfile(){
       data: {action: 'userListings', email: currentUserEmail},
       success: function(msg)
       {
+        if(msg[0].length > 0){
+          for(var i = 0; i < msg[0].length; i++){
+            $('#sellingListingTable tr:last').after('<tr><td>' + msg[0].title + '</td><td>' + msg[0].edition + '</td><td>' + msg[0].author + '</td><td>' + msg[0].isbn + '</td><td>' + msg[0].description + '</td><td>' + msg[0].author + '</td><td>'
+            + msg[0].price + '</td><td>' + msg[0].image + '</td><td>'+ msg[0].postingTime +'</td><td>' + msg[0].postingDate + '</td></tr>');
+          }
+        }
 
-        $('#sellingListingTable tr:last').after('<tr> <td>dfgdfg</td> <td>gdfg</td> <td>gdfg</td> </tr>');
-        $('#buyingListingTable tr:last').after('<tr><td></td><td></td><td></td></tr>');
+        if(msg[1].length > 0){
+          for(var i = 0; i < msg[1].length; i++){
+            $('#buyingListingTable tr:last').after('<tr><td>' + msg[1].title + '</td><td>' + msg[1].edition + '</td><td>' + msg[1].author + '</td><td>' + msg[1].isbn + '</td><td>' + msg[1].description + '</td><td>' + msg[1].author + '</td><td>'
+            + msg[1].image + '</td><td>'+ msg[1].postingTime +'</td><td>' + msg[1].postingDate + '</td></tr>');
+          }
+        }
 
       }
     }); // Ajax Call
