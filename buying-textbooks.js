@@ -5,11 +5,9 @@ $(document).ready(function(){
 
   listTextbooksPeopleNeed();
 
-});
 
 
-
-function listTextbooksPeopleNeed(){
+  function listTextbooksPeopleNeed(){
 
   $.ajax({
     cache: false,
@@ -32,3 +30,9 @@ function listTextbooksPeopleNeed(){
 
 
 }
+
+});
+
+
+
+

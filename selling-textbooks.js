@@ -5,11 +5,11 @@ $(document).ready(function(){
 
   listTextbooksForSale();
 
-});
 
 
 
-function listTextbooksForSale(){
+
+  function listTextbooksForSale(){
 
   $.ajax({
     cache: false,
@@ -32,3 +32,8 @@ function listTextbooksForSale(){
 
 
 }
+
+});
+
+
+

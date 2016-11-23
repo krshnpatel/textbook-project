@@ -18,8 +18,15 @@
 	        case "recommendedBooks":
 	        	recommendedTextbooks($_POST['email']);
 	        	break;
+	        case "textbooksPeopleNeed":
+	        	returnBuyingList();
+	        	break;
+	        case "textbooksForSale":
+	        	returnSellingList();
+	        	break;
 	    }
 	}
+
 
 	function connect()
 	{
@@ -47,6 +54,7 @@
 		return $myConnection;
 	}
 
+
 	function verifyUser($email, $password)
 	{
 		$myConnection = connect();
@@ -64,6 +72,7 @@
 
 		$myConnection->close();
 	}
+
 
 	function registerUser($email, $password, $firstName, $lastName, $phoneNum, $schoolName)
 	{
@@ -108,6 +117,7 @@
 		$myConnection->close();
 	}
 
+
 	function returnUserInfo($email)
 	{
 		$myConnection = connect();
@@ -130,6 +140,7 @@
 
 		$myConnection->close();
 	}
+
 
 	function returnUserListings($email)
 	{
@@ -183,6 +194,7 @@
 		$myConnection->close();
 	}
 
+
 	function recommendedTextbooks($email)
 	{
 		$myConnection = connect();
@@ -220,6 +232,64 @@
 
 		$myConnection->close();
 	}
+
+
+	function returnBuyingList()
+	{
+		$myConnection = connect();
+
+		$buyingListQuery = "SELECT t.title, t.edition, t.author, t.isbn, l.description, l.postingTime, l.postingDate
+							FROM Listing l, Textbook t
+							WHERE t.isbn = l.isbn AND
+								  l.listingID NOT IN (SELECT listingID
+								  					  FROM SellingList);";
+
+		$buyingList = $myConnection->query($buyingListQuery);
+
+		$finalBuyingArray = array();
+
+		if ($buyingList->num_rows > 0)
+		{
+			while ($row = $buyingList->fetch_assoc())
+			{
+				$data = array('title' => $row['title'], 'edition' => $row['edition'], 'author' => $row['author'], 'isbn' => $row['isbn'], 'description' => $row['description'], 'postingTime' => $row['postingTime'], 'postingDate' => $row['postingDate']);
+				array_push($finalBuyingArray, $data);
+			}
+		}
+
+		echo json_encode($finalBuyingArray);
+
+		$myConnection->close();
+	}
+
+
+	function returnSellingList()
+	{
+		$myConnection = connect();
+
+		$sellingListQuery = "SELECT t.title, t.edition, t.author, t.isbn, l.description, sl.price, sl.imagePath, l.postingTime, l.postingDate
+							 FROM Listing l, SellingList sl, Textbook t
+							 WHERE l.listingID = sl.listingID AND
+							 	   t.isbn = l.isbn;";
+
+		$sellingList = $myConnection->query($sellingListQuery);
+
+		$finalSellingArray = array();
+
+		if ($sellingList->num_rows > 0)
+		{
+			while ($row = $sellingList->fetch_assoc())
+			{
+				$data = array('title' => $row['title'], 'edition' => $row['edition'], 'author' => $row['author'], 'isbn' => $row['isbn'], 'description' => $row['description'], 'price' => $row['price'], 'imagePath' => $row['imagePath'], 'postingTime' => $row['postingTime'], 'postingDate' => $row['postingDate']);
+				array_push($finalSellingArray, $data);
+			}
+		}
+
+		echo json_encode($finalSellingArray);
+
+		$myConnection->close();
+	}
+
 
 	function debug_to_console( $data )
 	{
