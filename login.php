@@ -1,5 +1,7 @@
 <?php
 
+findMatches("jngo42@uwo.ca");
+
 	if (isset($_POST['action']))
 	{
 	    switch ($_POST['action']) {
@@ -23,6 +25,9 @@
 	        	break;
 	        case "textbooksForSale":
 	        	returnSellingList();
+	        	break;
+	        case "matchedTextbooks":
+	        	findMatches($_POST['email']);
 	        	break;
 	    }
 	}
@@ -286,6 +291,34 @@
 		}
 
 		echo json_encode($finalSellingArray);
+
+		$myConnection->close();
+	}
+
+
+	function findMatches($email)
+	{
+		$myConnection = connect();
+
+		$matchQuery = "SELECT *
+					   FROM MatchBuyerAndSeller
+					   WHERE buyerEmail = '" . $email . "' OR
+					   		 sellerEmail = '" . $email . "';";
+
+		$matchList = $myConnection->query($matchQuery);
+
+		$finalMatchingArray = array();
+
+		if ($matchList->num_rows > 0)
+		{
+			while ($row = $matchList->fetch_assoc())
+			{
+				$data = array('isbn' => $row['isbn'], 'title' => $row['title'], 'edition' => $row['edition'], 'author' => $row['author'], 'buyerFirstName' => $row['buyerFirstName'], 'buyerLastName' => $row['buyerLastName'], 'buyerEmail' => $row['buyerPhoneNum'], 'sellerFirstName' => $row['sellerFirstName'], 'sellerLastName' => $row['sellerLastName'], 'sellerEmail' => $row['sellerPhoneNum']);
+				array_push($finalMatchingArray, $data);
+			}
+		}
+
+		echo json_encode($finalMatchingArray);
 
 		$myConnection->close();
 	}
