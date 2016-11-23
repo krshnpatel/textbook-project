@@ -81,10 +81,13 @@ $(document).ready(function(){
       data: {action: 'recommendedBooks', email: currentUserEmail},
       success: function(msg)
       {
+        msg = JSON.parse(msg);
+        console.log(msg[0].title);
         if(msg.length > 0){
-          for(var i = 0; i < msg[0].length; i++){
-            $('#recommendedTextbooks tr:last').after('<tr><td>' + msg[0].title + '</td><td>' + msg[0].edition + '</td><td>' + msg[0].author + '</td><td>' + msg[0].isbn + '</td><td>'
-            + msg[0].price + '</td></tr>');
+          for(var i = 0; i < msg.length; i++){
+            //$('#recommendedTextbooks tr:last').after('<tr><td>gjgjgyg</td></tr>');
+
+            $('#recommendedTextbooks tr:last').after('<tr><td>' + msg[i].title + '</td><td>' + msg[i].edition + '</td><td>' + msg[i].author + '</td><td>' + msg[i].isbn + '</td><td>' + msg[i].price + '</td></tr>');
           }
         }
       }

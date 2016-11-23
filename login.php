@@ -15,6 +15,9 @@
 	        case "userListings":
 	        	returnUserListings($_POST['email']);
 	        	break;
+	        case "recommendedBooks":
+	        	recommendedTextbooks($_POST['email']);
+	        	break;
 	    }
 	}
 
@@ -175,6 +178,44 @@
 
 		array_push($finalArray, $finalSellingArray);
 		array_push($finalArray, $finalBuyingArray);
+		echo json_encode($finalArray);
+
+		$myConnection->close();
+	}
+
+	function recommendedTextbooks($email)
+	{
+		$myConnection = connect();
+
+		$userSchoolID = "SELECT schoolID
+						 FROM User
+						 WHERE userEmail = '" . $email . "';";
+
+		$userSchoolID = $myConnection->query($userSchoolID);
+		$userSchoolID = $userSchoolID->fetch_assoc()['schoolID'];
+
+		$recommendedTextbooksQuery = "SELECT t.title, t.edition, t.author, t.isbn, sl.price
+									  FROM Listing l, SellingList sl, User u, School s, Textbook t
+									  WHERE l.listingID = sl.listingID AND
+									  		u.userEmail = l.userEmail AND
+									  		u.schoolID = s.schoolID AND
+									  		t.isbn = l.isbn AND
+									  		u.schoolID = " . $userSchoolID . " AND
+									  		u.userEmail != '" . $email . "';";
+
+		$recommendedTextbooks = $myConnection->query($recommendedTextbooksQuery);
+
+		$finalArray = array();
+
+		if ($recommendedTextbooks->num_rows > 0)
+		{
+			while ($row = $recommendedTextbooks->fetch_assoc())
+			{
+				$data = array('title' => $row['title'], 'edition' => $row['edition'], 'author' => $row['author'], 'isbn' => $row['isbn'], 'price' => $row['price']);
+				array_push($finalArray, $data);
+			}
+		}
+
 		echo json_encode($finalArray);
 
 		$myConnection->close();
