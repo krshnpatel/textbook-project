@@ -5,7 +5,7 @@ $(document).ready(function(){
 
   var currentUserEmail = localStorage.getItem("_currentUserEmail");
   getUserProfile(currentUserEmail);
-
+  getUserListing(currentUserEmail);
 
 
 
@@ -45,17 +45,20 @@ $(document).ready(function(){
       data: {action: 'userListings', email: currentUserEmail},
       success: function(msg)
       {
+        msg = JSON.parse(msg);
+
+        console.log(msg[1][0].title);
+
         if(msg[0].length > 0){
           for(var i = 0; i < msg[0].length; i++){
-            $('#sellingListingTable tr:last').after('<tr><td>' + msg[0].title + '</td><td>' + msg[0].edition + '</td><td>' + msg[0].author + '</td><td>' + msg[0].isbn + '</td><td>' + msg[0].description + '</td><td>' + msg[0].author + '</td><td>'
-            + msg[0].price + '</td><td>' + msg[0].image + '</td><td>'+ msg[0].postingTime +'</td><td>' + msg[0].postingDate + '</td></tr>');
+            $('#sellingListingTable tr:last').after('<tr><td>' + msg[0][i].title + '</td><td>' + msg[0][i].edition + '</td><td>' + msg[0][i].author + '</td><td>' + msg[0][i].isbn + '</td><td>' + msg[0][i].description + '</td><td>'
+            + msg[0][i].price + '</td><td>' + msg[0][i].imagePath + '</td><td>'+ msg[0][i].postingTime +'</td><td>' + msg[0][i].postingDate + '</td></tr>');
           }
         }
 
         if(msg[1].length > 0){
           for(var i = 0; i < msg[1].length; i++){
-            $('#buyingListingTable tr:last').after('<tr><td>' + msg[1].title + '</td><td>' + msg[1].edition + '</td><td>' + msg[1].author + '</td><td>' + msg[1].isbn + '</td><td>' + msg[1].description + '</td><td>' + msg[1].author + '</td><td>'
-            + msg[1].image + '</td><td>'+ msg[1].postingTime +'</td><td>' + msg[1].postingDate + '</td></tr>');
+            $('#buyingListingTable tr:last').after('<tr><td>' + msg[1][i].title + '</td><td>' + msg[1][i].edition + '</td><td>' + msg[1][i].author + '</td><td>' + msg[1][i].isbn + '</td><td>' + msg[1][i].description + '</td><td>'+ msg[1][i].postingTime +'</td><td>' + msg[1][i].postingDate + '</td></tr>');
           }
         }
 
