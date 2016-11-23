@@ -15,7 +15,7 @@ function listTextbooksPeopleNeed(){
     cache: false,
     type: "POST",
     url: "login.php",
-    data: {action: 'textbooksPeopleNeed', email: currentUserEmail},
+    data: {action: 'textbooksPeopleNeed'},
     success: function(msg)
     {
       msg = JSON.parse(msg);
