@@ -5,6 +5,9 @@ $(document).ready(function(){
   var currentUserEmail = localStorage.getItem("_currentUserEmail");
   matchedTextbooks();
 
+  $('#logoutBtn').click(function() {
+    localStorage.removeItem('_currentUserEmail');
+  });
 
   function matchedTextbooks(){
 

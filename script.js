@@ -2,8 +2,9 @@ $(document).ready(function(){
 
 	console.log("ready");
 
-	
-
+	$('#registerBtn').click( function() {
+		window.location.href = "register.php";
+	});
 
 
 

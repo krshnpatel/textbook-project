@@ -1,7 +1,5 @@
 <?php
 
-changePassword("jngosafdsdf2@uwo.ca", "hello", "1234566788");
-
 	if (isset($_POST['action']))
 	{
 	    switch ($_POST['action']) {
@@ -337,7 +335,7 @@ changePassword("jngosafdsdf2@uwo.ca", "hello", "1234566788");
 		
 		if (!isPhoneNumValid($newPhoneNumber))
 		{
-			echo "PHONE"
+			echo "PHONE";
 		}
 
 		$changeUserInfoQuery = "UPDATE User

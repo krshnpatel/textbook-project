@@ -5,9 +5,9 @@ $(document).ready(function(){
 
   listTextbooksForSale();
 
-
-
-
+  $('#logoutBtn').click(function() {
+    localStorage.removeItem('_currentUserEmail');
+  });
 
   function listTextbooksForSale(){
 

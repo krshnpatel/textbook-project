@@ -11,7 +11,9 @@ $(document).ready(function(){
   getRecommendedBooks();
 
 
-
+  $('#logoutBtn').click(function() {
+    localStorage.removeItem('_currentUserEmail');
+  });
 
 
   $('#editBtn').click(function(){

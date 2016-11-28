@@ -5,7 +5,9 @@ $(document).ready(function(){
 
   listTextbooksPeopleNeed();
 
-
+  $('#logoutBtn').click(function() {
+    localStorage.removeItem('_currentUserEmail');
+  });
 
   function listTextbooksPeopleNeed(){
 

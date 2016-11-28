@@ -76,8 +76,8 @@
   </div>
 
   <div class = "container" id = "signup">
-    <button type="button" class="btn btn-primary btn-lg" id = "registerBtn" onclick="location.href='index.html';">Back</button>
-    <button type="button" class="btn btn-primary btn-lg" id = "signupBtn" onclick="location.href='main.html';">Sign Up</button>
+    <button type="button" class="btn btn-primary btn-lg" onclick="location.href='index.html';">Back</button>
+    <button type="button" class="btn btn-primary btn-lg" id = "signupBtn">Sign Up</button>
   </div>
 
 </body>
