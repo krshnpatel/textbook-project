@@ -64,7 +64,12 @@ $(document).ready(function(){
   });
 
 
+$('#addListingBtn').click(function(){
 
+  window.location.href = "new-listing.html";
+
+
+});
 
 
 

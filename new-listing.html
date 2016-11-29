@@ -1,0 +1,55 @@
+
+<html>
+
+<head>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel = "stylesheet" href = "new-listing.css" />
+  <script type="text/javascript" src="new-listing.js"></script>
+
+  <title>Textbook Buy/Sell</title>
+</head>
+<body>
+
+  <div id = "isbnDiv">
+
+
+    <label>Enter ISBN for the textbook:</label>
+    <input type = "text" id = "isbnText"/>
+    <button type="button" class="btn btn-default " id = "checkIsbnBtn">Check ISBN</button>
+  </div>
+
+  <div id = "inputDiv">
+    <label id = "lblTextbook">Textbook name:</label>
+    <input type="text"  id = "textbookTxt"/>
+
+    <label id = "lblAuthor">Author:</label>
+    <input type="text" id = "authorTxt"/>
+
+    <label id = "lblEdition">Edition:</label>
+    <input type="text" id = "editionTxt"/>
+  </div>
+
+  <div id="bottomDiv">
+    <div id = "listingInputDiv">
+
+      <label class="radio-inline"><input type="radio" name="optradio" value = "0" checked="checked" id = "sellingRadioBtn">Selling</label>
+      <label class="radio-inline"><input type="radio" name="optradio" value = "1" id = "buyingRadioBtn">Buying</label>
+
+      <label id = "lblPrice">Price:</label>
+      <input type="text" id = "priceTxt"/>
+    </div>
+
+    <label for="comment">Description:</label>
+    <textarea class="form-control" rows="5" id="descriptionTxt"></textarea>
+
+    <button type="button" class="btn btn-default profileElements" id = "submitListingBtn">Add Listing</button>
+  </div>
+
+</body>
+</html>
