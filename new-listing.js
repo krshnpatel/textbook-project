@@ -8,12 +8,12 @@ $(document).ready(function(){
 
 
 
-  hideTextbookInputs();
+  //hideTextbookInputs();
 
 
 
 
-  function addListing(){
+  $('#submitListingBtn').click(function(){
 
     var _textbook = $('#textbookTxt').val();
     var _author = $('#authorTxt').val();
@@ -21,7 +21,7 @@ $(document).ready(function(){
     var _price = $('#priceTxt').val();
     var _description = $('#descriptionTxt').val();
 
-    if(_textbook.length != 0 && _author.length != 0 && validEdition(_edition) && validPrice(_price)){
+    if(validTextbook(_textbook) && validAuthor(_author) && validEdition(_edition) && validPrice(_price)){
       $.ajax({
         cache: false,
         type: "POST",
@@ -33,7 +33,7 @@ $(document).ready(function(){
         }
       }); // Ajax Call
     }
-  }
+  });
 
 
   $('input[name="optradio"]').change(function(){
@@ -86,12 +86,22 @@ $(document).ready(function(){
 
   function validEdition(edition){
 
+    if(_validIsbn){
+      return true;
+    }
+
+    if(edition.length == 0){
+      $('#errorTag').text("Edition field is empty");
+      return false;
+    }
+
     for(var i = 0; i < edition.length; i++){
       if(edition.charCodeAt(i) < 48 || edition.charCodeAt(i) > 57){
+        $('#errorTag').text("Invalid edition number");
         return false;
       }
     }
-
+    $('#errorTag').text("");
     return true;
 
 
@@ -99,14 +109,61 @@ $(document).ready(function(){
 
 
   function validPrice(price){
+
+    var dotCount = 0;
+
+    if(price.length == 0){
+      $('#errorTag').text("Price field is empty");
+      return false;
+    }
+
     for( var i = 0; i < price.length; i++){
-      if((price.charCodeAt(i) < 48 || price.charCodeAt(i) > 57) && price.charCodeAt(i) != 46){
+      if(price.charCodeAt(i) == 46){
+        dotCount++;
+      }
+
+      if(((price.charCodeAt(i) < 48 || price.charCodeAt(i) > 57) && price.charCodeAt(i) != 46) || dotCount > 1){
+        $('#errorTag').text("Invalid price");
         return false;
       }
     }
 
+
+    $('#errorTag').text("");
     return true;
   }
+
+
+  function validAuthor(author){
+    if(_validIsbn){
+      return true;
+    }
+    else if(author.length == 0){
+      $('#errorTag').text("Author field is empty");
+      return false;
+    }
+    $('#errorTag').text("");
+    return true;
+  }
+
+
+
+
+
+  function validTextbook(textbook){
+    if(_validIsbn){
+      return true;
+    }
+    if(textbook.length == 0){
+      $('#errorTag').text("Textbook field is empty");
+      return false;
+    }
+    $('#errorTag').text("");
+    return true;
+  }
+
+
+
 
   function hideTextbookInputs(){
     $('#inputDiv').hide();
@@ -120,15 +177,17 @@ $(document).ready(function(){
   function isbnValid(isbn){
 
     if(isbn.length != 13){
+      $('#errorTag').text("ISBN needs to be 13 numbers long");
       return false;
     }
 
     for(var i = 0; i < isbn.length; i++){
       if(isbn.charCodeAt(i) < 48 || isbn.charCodeAt(i) > 57){
+        $('#errorTag').text("Invalid ISBN");
         return false;
       }
     }
-
+    $('#errorTag').text("");
     return true;
   }
 
