@@ -20,7 +20,6 @@ $(document).ready(function(){
 			data: {action: 'login', email: userEmail, password: userPassword},
 			success: function(msg)
 			{
-				//$('#calling').html((msg));
 				console.log("SUCCESS: " + msg);
 				if(msg == "TRUE"){
 				//--------------------------------GO TO MAIN PAGE-------------------------
@@ -69,7 +68,6 @@ $(document).ready(function(){
 				},
 				complete: function(msg)
 				{
-					//$('#calling').html((msg));
 					console.log("REGISTERED: " + msg);
 					localStorage.setItem('currentUserEmail', userEmail);
 					window.location.href = "main.html";
@@ -141,7 +139,7 @@ $(document).ready(function(){
 
 	function convertToSQLString(schoolName)
 	{
-		var name = schoolName; // hello''s world's
+		var name = schoolName;
 		for (var i = 0; i < name.length; i++)
 		{
 			if (name.charCodeAt(i) == 39)

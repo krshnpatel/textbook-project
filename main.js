@@ -89,7 +89,6 @@ $('#addListingBtn').click(function(){
         $('#lName').text("Last name: " + msg[0].lastName + "");
         $('#phoneNum').text("Phone number: " + msg[0].phoneNum + "");
         $('#school').text("School: " + msg[0].schoolName + "");
-        //console.log("get user profile" + msg[0]);
       }
     }); // Ajax Call
   }//end getUserProfile
@@ -145,8 +144,6 @@ $('#addListingBtn').click(function(){
         console.log(msg[0].title);
         if(msg.length > 0){
           for(var i = 0; i < msg.length; i++){
-            //$('#recommendedTextbooks tr:last').after('<tr><td>gjgjgyg</td></tr>');
-
             $('#recommendedTextbooks tr:last').after('<tr><td>' + msg[i].title + '</td><td>' + msg[i].edition + '</td><td>' + msg[i].author + '</td><td>' + msg[i].isbn + '</td><td>' + msg[i].price + '</td></tr>');
           }
         }

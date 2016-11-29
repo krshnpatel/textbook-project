@@ -1,7 +1,5 @@
 <?php
 
-//addListing("jngo42@uwo.ca", '9780399184413', 'Seven Brief Lessons on Physics', 'Carlo Rovelli', 1, FALSE, FALSE, NULL, "BRAND NEW TEXTBOOK PLS");
-
 	if (isset($_POST['action']))
 	{
 	    switch ($_POST['action']) {
@@ -355,8 +353,6 @@
 	{
 		$myConnection = connect();
 
-		//echo $isSelling . " -- " . $isIsbnValid;
-
 		if ($isIsbnValid == "false")
 		{
 			echo "INSIDE addTextbook";
@@ -368,7 +364,6 @@
 		$addListingQuery = "INSERT INTO Listing(postingDate, postingTime, description, userEmail, isbn)
 							SELECT CURDATE(), CURTIME(), '" . $description . "', '" . $userEmail . "', '" . $isbn . "';";
 
-		//echo $addListingQuery;
 		$myConnection->query($addListingQuery);
 
 		echo "BEFORE isSelling if-statement";
@@ -384,7 +379,6 @@
 			$listingID = $row['listID'];
 			$addSellingListQuery = "INSERT INTO SellingList VALUES(" . $listingID . ", " . $price . ", NULL);";
 
-			//echo $addSellingListQuery;
 			$myConnection->query($addSellingListQuery);
 			echo "ADDED TO SELLING LIST";
 		}
@@ -397,7 +391,7 @@
 	}
 
 
-	function changeUserInfo($email, $newPassword, $newPhoneNumber)
+	/*function changeUserInfo($email, $newPassword, $newPhoneNumber)
 	{
 		$myConnection = connect();
 
@@ -419,7 +413,7 @@
 		//$myConnection->query($changeUserInfoQuery);
 
 		$myConnection->close();
-	}
+	}*/
 
 
 	function isPhoneNumValid($phoneNum)
@@ -428,17 +422,6 @@
 		{
 			return true;
 		}
-	}
-
-
-	function debug_to_console( $data )
-	{
-	    if ( is_array( $data ) )
-	        $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
-	    else
-	        $output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
-
-	    //echo $output;
 	}
 
 ?>
