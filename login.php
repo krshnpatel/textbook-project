@@ -1,5 +1,7 @@
 <?php
 
+//addListing("jngo42@uwo.ca", '9780399184413', 'Seven Brief Lessons on Physics', 'Carlo Rovelli', 1, FALSE, FALSE, NULL, "BRAND NEW TEXTBOOK PLS");
+
 	if (isset($_POST['action']))
 	{
 	    switch ($_POST['action']) {
@@ -31,7 +33,7 @@
 	        	checkISBN($_POST['isbn']);
 	        	break;
 	        case "addListing":
-	        	addListing($_POST['email'], $_POST['textbook'], $_POST['author'], $_POST['edition'], $_POST['isSelling'], $_POST['validIsbn'], $_POST['price'], $_POST['description']);
+	        	addListing($_POST['email'], $_POST['isbn'], $_POST['textbook'], $_POST['author'], $_POST['edition'], $_POST['isSelling'], $_POST['validIsbn'], $_POST['price'], $_POST['description']);
 	        	break;
 	    }
 	}
@@ -349,42 +351,46 @@
 	}
 
 
-	function addListing($userEmail, $title, $author, $edition, $isSelling, $isIsbnValid, $price, $description)
+	function addListing($userEmail, $isbn, $title, $author, $edition, $isSelling, $isIsbnValid, $price, $description)
 	{
 		$myConnection = connect();
 
-		$textbookIsbn;
+		//echo $isSelling . " -- " . $isIsbnValid;
 
-		if ($isIsbnValid != TRUE)
+		if ($isIsbnValid == "false")
 		{
+			echo "INSIDE addTextbook";
 			$addTextbookQuery = "INSERT INTO Textbook VALUES('" . $isbn . "', '" . $title . "', " . $edition . ", '" . $author . "');";
 
 			$myConnection->query($addTextbookQuery);
 		}
-		else
-		{
-			$textbookIsbn = $isbn;
-		}
 
 		$addListingQuery = "INSERT INTO Listing(postingDate, postingTime, description, userEmail, isbn)
-							SELECT CURDATE(), CURTIME(), '" . $description . "', '" . $userEmail . "', '" . $textbookIsbn . "';"
+							SELECT CURDATE(), CURTIME(), '" . $description . "', '" . $userEmail . "', '" . $isbn . "';";
 
-		echo $addListingQuery;
-		//$myConnection->query($addListingQuery);
+		//echo $addListingQuery;
+		$myConnection->query($addListingQuery);
 
-		if ($isSelling)
+		echo "BEFORE isSelling if-statement";
+
+		if ($isSelling == "true")
 		{
-			$findListingIDQuery = "SELECT MAX(listingID)
+			$findListingIDQuery = "SELECT MAX(listingID) AS listID
 							  FROM Listing;";
 
 			$listingID = $myConnection->query($findListingIDQuery);
-			$listingID = $listingID->fetch_assoc();
-			$listingID = $listingID['listingID'];
-
+			
+			$row = $listingID->fetch_assoc();
+			$listingID = $row['listID'];
 			$addSellingListQuery = "INSERT INTO SellingList VALUES(" . $listingID . ", " . $price . ", NULL);";
 
-			echo $addSellingListQuery;
-			//$myConnection->query($addSellingListQuery);
+			//echo $addSellingListQuery;
+			$myConnection->query($addSellingListQuery);
+			echo "ADDED TO SELLING LIST";
+		}
+		else
+		{
+			echo "ADDED TO LISTING";
 		}
 
 		$myConnection->close();

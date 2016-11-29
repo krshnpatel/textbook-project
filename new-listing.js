@@ -10,8 +10,9 @@ $(document).ready(function(){
 
   hideTextbookInputs();
 
-
-
+  $('#cancelButton').click(function() {
+    window.location.href = "main.html";
+  });
 
   $('#submitListingBtn').click(function(){
 
@@ -20,16 +21,18 @@ $(document).ready(function(){
     var _edition = $('#editionTxt').val();
     var _price = $('#priceTxt').val();
     var _description = $('#descriptionTxt').val();
+    var _isbn = $('#isbnText').val();
 
     if(validTextbook(_textbook) && validAuthor(_author) && validEdition(_edition) && validPrice(_price)){
       $.ajax({
         cache: false,
         type: "POST",
         url: "login.php",
-        data: {action: 'addListing', email: currentUserEmail, textbook: _textbook, author: _author, edition: _edition, isSelling: _isSelling, validIsbn: _validIsbn, price: _price, description: _description},
+        data: {action: 'addListing', email: currentUserEmail, isbn: _isbn, textbook: _textbook, author: _author, edition: _edition, isSelling: _isSelling, validIsbn: _validIsbn, price: _price, description: _description},
         success: function(msg)
         {
           console.log(msg);
+          window.location.href = "main.html";
         }
       }); // Ajax Call
     }
@@ -66,14 +69,14 @@ $(document).ready(function(){
           if(msg){
             $('#bottomDiv').show();
             $('#checkIsbnBtn').hide();
-            $("checkIsbnBtn").prop('disabled', true);
+            $("#isbnText").prop('disabled', true);
             _validIsbn = true;
           }
           else{
             $('#inputDiv').show();
             $('#bottomDiv').show();
             $('#checkIsbnBtn').hide();
-            $("checkIsbnBtn").prop('disabled', true);
+            $("#isbnText").prop('disabled', true);
             _validIsbn = false;
           }
         }
@@ -112,7 +115,7 @@ $(document).ready(function(){
 
     var dotCount = 0;
 
-    if(price.length == 0){
+    if(price.length == 0 && _isSelling == true){
       $('#errorTag').text("Price field is empty");
       return false;
     }
@@ -122,7 +125,7 @@ $(document).ready(function(){
         dotCount++;
       }
 
-      if(((price.charCodeAt(i) < 48 || price.charCodeAt(i) > 57) && price.charCodeAt(i) != 46) || dotCount > 1){
+      if((((price.charCodeAt(i) < 48 || price.charCodeAt(i) > 57) && price.charCodeAt(i) != 46) || dotCount > 1) && _isSelling == true){
         $('#errorTag').text("Invalid price");
         return false;
       }
