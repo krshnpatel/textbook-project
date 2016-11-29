@@ -27,6 +27,12 @@
 	        case "matchedTextbooks":
 	        	findMatches($_POST['email']);
 	        	break;
+	        case "checkIsbn":
+	        	checkISBN($_POST['isbn']);
+	        	break;
+	        case "addListing":
+	        	addListing($_POST['email'], $_POST['textbook'], $_POST['author'], $_POST['edition'], $_POST['isSelling'], $_POST['validIsbn'], $_POST['price'], $_POST['description']);
+	        	break;
 	    }
 	}
 
@@ -319,6 +325,67 @@
 		}
 
 		echo json_encode($finalMatchingArray);
+
+		$myConnection->close();
+	}
+
+
+	function checkISBN($isbn)
+	{
+		$myConnection = connect();
+
+		$isbnQuery = "SELECT *
+					  FROM Textbook
+					  WHERE isbn = '" . $isbn . "';";
+
+		$isbnQuery = $myConnection->query($isbnQuery);
+
+		if ($isbnQuery->num_rows == 1)
+			echo TRUE;
+		else
+			echo FALSE;
+
+		$myConnection->close();
+	}
+
+
+	function addListing($userEmail, $title, $author, $edition, $isSelling, $isIsbnValid, $price, $description)
+	{
+		$myConnection = connect();
+
+		$textbookIsbn;
+
+		if ($isIsbnValid != TRUE)
+		{
+			$addTextbookQuery = "INSERT INTO Textbook VALUES('" . $isbn . "', '" . $title . "', " . $edition . ", '" . $author . "');";
+
+			$myConnection->query($addTextbookQuery);
+		}
+		else
+		{
+			$textbookIsbn = $isbn;
+		}
+
+		$addListingQuery = "INSERT INTO Listing(postingDate, postingTime, description, userEmail, isbn)
+							SELECT CURDATE(), CURTIME(), '" . $description . "', '" . $userEmail . "', '" . $textbookIsbn . "';"
+
+		echo $addListingQuery;
+		//$myConnection->query($addListingQuery);
+
+		if ($isSelling)
+		{
+			$findListingIDQuery = "SELECT MAX(listingID)
+							  FROM Listing;";
+
+			$listingID = $myConnection->query($findListingIDQuery);
+			$listingID = $listingID->fetch_assoc();
+			$listingID = $listingID['listingID'];
+
+			$addSellingListQuery = "INSERT INTO SellingList VALUES(" . $listingID . ", " . $price . ", NULL);";
+
+			echo $addSellingListQuery;
+			//$myConnection->query($addSellingListQuery);
+		}
 
 		$myConnection->close();
 	}
