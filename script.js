@@ -1,7 +1,5 @@
 $(document).ready(function(){
 
-	console.log("ready");
-
 	$('#registerBtn').click( function() {
 		window.location.href = "register.php";
 	});
@@ -20,11 +18,15 @@ $(document).ready(function(){
 			data: {action: 'login', email: userEmail, password: userPassword},
 			success: function(msg)
 			{
-				console.log("SUCCESS: " + msg);
-				if(msg == "TRUE"){
+				if(msg == "TRUE")
+				{
 				//--------------------------------GO TO MAIN PAGE-------------------------
 				localStorage.setItem('_currentUserEmail', userEmail);
 				window.location.href = "main.html";
+				}
+				else
+				{
+					$('#invalidUser').text("Invalid email or password");
 				}
 			}
 		}); // Ajax Call
@@ -48,8 +50,7 @@ $(document).ready(function(){
 			userSchool = convertToSQLString(userSchool);
 		}
 
-
-		if(isPhoneNumValid(userPhoneNum) && isEmailValid(userEmail)){
+		if(isEmailValid(userEmail) &&isPasswordValid(userPassword) && isNameValid(userFirstName) && isNameValid(userLastName) && isPhoneNumValid(userPhoneNum)){
 
 			userPhoneNum = formatPhoneNum(userPhoneNum);
 
@@ -68,9 +69,15 @@ $(document).ready(function(){
 				},
 				complete: function(msg)
 				{
-					console.log("REGISTERED: " + msg);
-					localStorage.setItem('currentUserEmail', userEmail);
-					window.location.href = "main.html";
+					if (msg.responseText == "TRUE")
+					{
+						localStorage.setItem('_currentUserEmail', userEmail);
+						window.location.href = "main.html";
+					}
+					else
+					{
+						$('#errorTag').text("Email already exists");
+					}
 				}
 			}); // Ajax Call
 		}
@@ -83,15 +90,15 @@ $(document).ready(function(){
 
 
 	function isPhoneNumValid(phoneNum){
-		for(var i = 0; i < phoneNum.length; i++){
-			console.log(phoneNum.charCodeAt(i));
+		for(var i = 0; i < phoneNum.length; i++)
+		{
 			if(phoneNum.charCodeAt(i) < 48 || phoneNum.charCodeAt(i) > 57){
 				$('#errorTag').text("invalid phone number");
 				return false;
 			}
 		}
 		if(phoneNum.length != 10){
-			$('#errorTag').text("Must be 10 numbers long");
+			$('#errorTag').text("Phone number must be 10 numbers long");
 			return false;
 		}
 
@@ -114,27 +121,25 @@ $(document).ready(function(){
 
 
 
-	function isEmailValid(email){
+	function isEmailValid(userEmail){
 		var period = false;
 		var atSign = false;
-		for(var i = 0; i < email.length; i++){
-			if(email.charCodeAt(i) == 46){
+
+		for(var i = 0; i < userEmail.length; i++){
+			if(userEmail.charCodeAt(i) == 46){
 				period = true;
 			}
-			if(email.charCodeAt(i) == 64){
+			if(userEmail.charCodeAt(i) == 64){
 				atSign = true;
 			}
 			if(atSign && period){
 				return true;
 			}
 		}
-		$('#errorTag').text("invalid email");
+
+		$('#errorTag').text("Invalid email");
 		return false;
 	}
-
-
-
-
 
 
 	function convertToSQLString(schoolName)
@@ -152,9 +157,25 @@ $(document).ready(function(){
 	}
 
 
+	function isPasswordValid(password)
+	{
+		if (password.length < 6)
+		{
+			$('#errorTag').text("Password must be more than 6 characters");
+			return false;
+		}
+		return true;
+	}
 
-
-
+	function isNameValid(name)
+	{
+		if (name.length <= 0)
+		{
+			$('#errorTag').text("Please enter your first name and last name");
+			return false;
+		}
+		return true;
+	}
 
 
 });

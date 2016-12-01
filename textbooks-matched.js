@@ -1,7 +1,5 @@
 $(document).ready(function(){
 
-  console.log("ready");
-
   var currentUserEmail = localStorage.getItem("_currentUserEmail");
   matchedTextbooks();
 
@@ -19,7 +17,7 @@ $(document).ready(function(){
     success: function(msg)
     {
       msg = JSON.parse(msg);
-      console.log(msg[0].title);
+
       if(msg.length > 0){
         for(var i = 0; i < msg.length; i++){
 

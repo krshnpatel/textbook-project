@@ -51,18 +51,12 @@
 		if ($myConnection->connect_error)
 			die("Connection failed: " . $myConnection->connect_error);
 
-		debug_to_console("Connected successfully<br/>");
-
 		$sql = "USE kriativejatabase;";
 
-		if ($myConnection->query($sql) === TRUE)
-			debug_to_console("Using the database!");
-		else
-			debug_to_console("Error using database: " . $myConnection->error);
+		$myConnection->query($sql);
 
 		return $myConnection;
 	}
-
 
 	function verifyUser($email, $password)
 	{
@@ -355,7 +349,6 @@
 
 		if ($isIsbnValid == "false")
 		{
-			echo "INSIDE addTextbook";
 			$addTextbookQuery = "INSERT INTO Textbook VALUES('" . $isbn . "', '" . $title . "', " . $edition . ", '" . $author . "');";
 
 			$myConnection->query($addTextbookQuery);
@@ -365,8 +358,6 @@
 							SELECT CURDATE(), CURTIME(), '" . $description . "', '" . $userEmail . "', '" . $isbn . "';";
 
 		$myConnection->query($addListingQuery);
-
-		echo "BEFORE isSelling if-statement";
 
 		if ($isSelling == "true")
 		{
@@ -380,12 +371,9 @@
 			$addSellingListQuery = "INSERT INTO SellingList VALUES(" . $listingID . ", " . $price . ", NULL);";
 
 			$myConnection->query($addSellingListQuery);
-			echo "ADDED TO SELLING LIST";
 		}
-		else
-		{
-			echo "ADDED TO LISTING";
-		}
+
+		echo "done";
 
 		$myConnection->close();
 	}

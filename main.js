@@ -3,7 +3,6 @@ $(document).ready(function(){
 
   $('#editProfileDiv').hide();
   var open = false;
-  console.log("ready");
 
   var currentUserEmail = localStorage.getItem("_currentUserEmail");
   getUserProfile();
@@ -76,7 +75,7 @@ $('#addListingBtn').click(function(){
 
 
   function getUserProfile(){
-    console.log("get user profile 1" + currentUserEmail);
+
     $.ajax({
       cache: false,
       type: "POST",
@@ -106,8 +105,6 @@ $('#addListingBtn').click(function(){
       success: function(msg)
       {
         msg = JSON.parse(msg);
-
-        console.log(msg[1][0].title);
 
         if(msg[0].length > 0){
           for(var i = 0; i < msg[0].length; i++){
@@ -141,7 +138,7 @@ $('#addListingBtn').click(function(){
       success: function(msg)
       {
         msg = JSON.parse(msg);
-        console.log(msg[0].title);
+
         if(msg.length > 0){
           for(var i = 0; i < msg.length; i++){
             $('#recommendedTextbooks tr:last').after('<tr><td>' + msg[i].title + '</td><td>' + msg[i].edition + '</td><td>' + msg[i].author + '</td><td>' + msg[i].isbn + '</td><td>' + msg[i].price + '</td></tr>');
@@ -158,8 +155,8 @@ $('#addListingBtn').click(function(){
 
 
   function isPhoneNumValid(phoneNum){
-    for(var i = 0; i < phoneNum.length; i++){
-      console.log(phoneNum.charCodeAt(i));
+    for(var i = 0; i < phoneNum.length; i++)
+    {
       if(phoneNum.charCodeAt(i) < 48 || phoneNum.charCodeAt(i) > 57){
         $('#errorTag').text("invalid phone number");
         return false;

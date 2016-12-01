@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  console.log("ready");
 
   var currentUserEmail = localStorage.getItem("_currentUserEmail");
 
@@ -23,7 +22,8 @@ $(document).ready(function(){
     var _description = $('#descriptionTxt').val();
     var _isbn = $('#isbnText').val();
 
-    if(validTextbook(_textbook) && validAuthor(_author) && validEdition(_edition) && validPrice(_price)){
+    if(validTextbook(_textbook) && validAuthor(_author) && validEdition(_edition) && validPrice(_price))
+    {
       $.ajax({
         cache: false,
         type: "POST",
@@ -31,7 +31,6 @@ $(document).ready(function(){
         data: {action: 'addListing', email: currentUserEmail, isbn: _isbn, textbook: _textbook, author: _author, edition: _edition, isSelling: _isSelling, validIsbn: _validIsbn, price: _price, description: _description},
         success: function(msg)
         {
-          console.log(msg);
           window.location.href = "main.html";
         }
       }); // Ajax Call
